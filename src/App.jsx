@@ -162,10 +162,7 @@ export default function HashBuster() {
                           </SelectTrigger>
                           <SelectContent className="bg-gray-800 border-gray-700 text-white">
                             <SelectItem value="brute-force">
-                              Brute Force{" "}
-                              <span className="text-xs">
-                                (max-length : 5)
-                              </span>
+                              Brute Force
                             </SelectItem>
                             <SelectItem value="dictionary">
                               Dictionary Attack
