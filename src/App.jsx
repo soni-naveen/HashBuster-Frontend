@@ -23,8 +23,8 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export default function HashBuster() {
   const [hash, setHash] = useState("");
-  const [algorithm, setAlgorithm] = useState("md5");
-  const [method, setMethod] = useState("brute-force");
+  const [algorithm, setAlgorithm] = useState("");
+  const [method, setMethod] = useState("");
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -65,15 +65,20 @@ export default function HashBuster() {
 
   const handleReset = () => {
     setHash("");
-    setAlgorithm("md5");
-    setMethod("brute-force");
+    setAlgorithm("");
+    setMethod("");
+    setLoading(false);
     setResult(null);
     setError("");
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 flex items-center justify-center p-5">
-      <div className="w-full max-w-4xl">
+    <div className="min-h-screen flex items-center justify-center p-5">
+      <div className="absolute inset-0 bg-[url('src/assets/bg.jpg')] bg-center bg-no-repeat bg-cover z-0" />
+
+      {/* Gradient overlay */}
+      <div className="absolute inset-0 bg-gray-950 opacity-60 z-10" />
+      <div className="relative z-20 w-full max-w-4xl">
         {/* Title Section */}
         <AnimatePresence>
           {showTitle && (
@@ -85,8 +90,8 @@ export default function HashBuster() {
               className="text-center mb-10"
             >
               <AnimatedTitle />
-              <p className="text-gray-300 mt-2 text-lg">
-                Advanced Password Hash Cracking Tool
+              <p className="text-gray-300 mt-2 text-lg -ml-8 font-mono">
+                Password Hash Cracking Tool
               </p>
             </motion.div>
           )}
@@ -103,7 +108,7 @@ export default function HashBuster() {
               <Card className="border-0 w-xl mx-auto bg-black/40 backdrop-blur-md shadow-xl">
                 <CardHeader className="pb-3">
                   <CardTitle className="flex text-2xl justify-center items-center text-white">
-                    <Shield className="mr-2 h-6 w-6 text-purple-400" />
+                    <Shield className="mr-2 h-6 w-6 text-indigo-400" />
                     HashBuster - Password Cracker
                   </CardTitle>
                   <CardDescription className="text-center text-base text-gray-400 ml-1 mb-5">
@@ -140,7 +145,7 @@ export default function HashBuster() {
                         </label>
                         <Select value={algorithm} onValueChange={setAlgorithm}>
                           <SelectTrigger className="bg-gray-800/50 mt-1 border-gray-700 text-white">
-                            <SelectValue placeholder="Select algorithm" />
+                            <SelectValue placeholder="-- Select --" />
                           </SelectTrigger>
                           <SelectContent className="bg-gray-800 border-gray-700 text-white">
                             <SelectItem value="md5">MD5</SelectItem>
@@ -158,7 +163,7 @@ export default function HashBuster() {
                         </label>
                         <Select value={method} onValueChange={setMethod}>
                           <SelectTrigger className="bg-gray-800/50 mt-1 border-gray-700 text-white">
-                            <SelectValue placeholder="Select method" />
+                            <SelectValue placeholder="-- Select --" />
                           </SelectTrigger>
                           <SelectContent className="bg-gray-800 border-gray-700 text-white">
                             <SelectItem value="brute-force">
@@ -178,7 +183,7 @@ export default function HashBuster() {
                     <div className="flex gap-3 pt-2">
                       <Button
                         type="submit"
-                        className="flex-1 text-white bg-purple-600 hover:bg-purple-700 uppercase"
+                        className="flex-1 text-white bg-violet-800 hover:bg-violet-900 uppercase"
                       >
                         <Zap className="mr-2 h-4 w-4" />
                         Crack password
@@ -200,14 +205,33 @@ export default function HashBuster() {
                       animate={{ opacity: 1 }}
                       className="mt-6 flex flex-col items-center justify-center text-center"
                     >
-                      <div className="relative h-12 w-12">
-                        <div className="absolute inset-0 rounded-full border-2 border-t-purple-500 border-r-transparent animate-spin" />
-                        <div className="absolute inset-1 rounded-full border-2 border-r-purple-400 border-t-transparent animate-spin animation-delay-200" />
-                        <div className="absolute inset-2 rounded-full border-2 border-b-purple-300 border-t-transparent animate-spin animation-delay-400" />
+                      <div className="relative w-full h-10 bg-black text-violet-500 font-mono border border-violet-400 rounded-md shadow-lg p-2 overflow-hidden">
+                        <div className="absolute inset-0 bg-black opacity-80 z-0" />
+
+                        {/* Animated "matrix-style" code stream */}
+                        <div className="absolute top-0 left-0 w-full h-full z-10 overflow-hidden">
+                          <div className="animate-pulse text-xs leading-none whitespace-nowrap tracking-widest">
+                            {[...Array(20)].map((_, i) => (
+                              <div
+                                key={i}
+                                className="animate-[pulse_1.5s_ease-in-out_infinite] opacity-80"
+                              >
+                                {Math.random()
+                                  .toString(36)
+                                  .slice(2, 8)
+                                  .toUpperCase()}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Status message */}
+                        <div className="relative z-20 flex items-center justify-center h-full animate-pulse">
+                          <span className="text-sm font-bold tracking-wide">
+                            CRACKING ⚡...
+                          </span>
+                        </div>
                       </div>
-                      <p className="mt-4 text-gray-300">
-                        Cracking in progress... Please wait ⏳
-                      </p>
                     </motion.div>
                   )}
 
@@ -228,7 +252,7 @@ export default function HashBuster() {
                       className="mt-6 p-4 rounded-md border bg-gray-800/50 border-gray-700"
                     >
                       <h3 className="text-white font-medium mb-2 flex items-center">
-                        <Key className="mr-2 h-4 w-4 text-purple-400" />
+                        <Key className="mr-2 h-4 w-4 text-indigo-400" />
                         Result
                       </h3>
                       {result.success ? (
