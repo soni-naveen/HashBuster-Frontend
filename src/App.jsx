@@ -145,7 +145,6 @@ export default function HashBuster() {
                           <SelectContent className="bg-gray-800 border-gray-700 text-white">
                             <SelectItem value="md5">MD5</SelectItem>
                             <SelectItem value="sha1">SHA-1</SelectItem>
-                            <SelectItem value="sha256">SHA-256</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
@@ -163,7 +162,10 @@ export default function HashBuster() {
                           </SelectTrigger>
                           <SelectContent className="bg-gray-800 border-gray-700 text-white">
                             <SelectItem value="brute-force">
-                              Brute Force
+                              Brute Force{" "}
+                              <span className="text-xs">
+                                (max-length : 5)
+                              </span>
                             </SelectItem>
                             <SelectItem value="dictionary">
                               Dictionary Attack
