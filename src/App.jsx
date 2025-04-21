@@ -49,6 +49,15 @@ export default function HashBuster() {
 
   const handleCrack = async (e) => {
     e.preventDefault();
+    if (!algorithm) {
+      alert("Please select an Algorithm");
+      return;
+    }
+    if (!method) {
+      alert("Please select a Method");
+      return;
+    }
+
     setError("");
     setResult(null);
     setLoading(true);
@@ -228,7 +237,7 @@ export default function HashBuster() {
                         {/* Status message */}
                         <div className="relative z-20 flex items-center justify-center h-full animate-pulse">
                           <span className="text-sm font-bold tracking-wide">
-                            CRACKING ⚡...
+                            CRACKING⚡...
                           </span>
                         </div>
                       </div>
