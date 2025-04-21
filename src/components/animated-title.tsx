@@ -28,7 +28,7 @@ export function AnimatedTitle() {
             initial={{ opacity: 0, y: 0 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
-              duration: 1,
+              duration: 0.5,
               delay: index * 0.1,
               ease: "easeOut",
             }}
